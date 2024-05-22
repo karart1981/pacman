@@ -29,6 +29,7 @@ body {
     top:80px;
     left:10px;
 }
+
 button{
     color:#fff;
     border:none;
@@ -54,6 +55,7 @@ button:hover{
     h1{
         padding-top:30px;
     }
+    
 }
 
 @media screen and (max-width:1024px){

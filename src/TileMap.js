@@ -2,10 +2,13 @@ import { Pacman } from "./Pacman.js";
 import { Enemy } from "./Enemy.js";
 import MovingDirection from "./MovingDirection.js";
 
+const right = document.querySelector("#right");
+        const left = document.querySelector("#left");
+        const up = document.querySelector("#up");
+        const down = document.querySelector("#down");
 export class TileMap {
     constructor(tileSize) {
         this.tileSize = tileSize;
-
         this.yellowDot = new Image();
         this.yellowDot.src = "images/yellowDot.png";
 
@@ -20,6 +23,7 @@ export class TileMap {
         this.powerDotAnmationTimer = this.powerDotAnmationTimerDefault;
     }
 
+   
     map = [
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 1],
@@ -173,7 +177,10 @@ export class TileMap {
                 return true;
             }
         }
+
         return false;
+
+
     }
 
     didWin() {
@@ -208,4 +215,5 @@ export class TileMap {
         }
         return false;
     }
+
 }

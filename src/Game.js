@@ -15,6 +15,7 @@ export class Game {
         this.gameWinSound = new Audio("sounds/gameWin.wav");
         this.tileMap.setCanvasSize(this.canvas);
         this.startGameLoop();
+        
     }
 
     startGameLoop() {
