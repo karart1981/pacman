@@ -1,19 +1,19 @@
-import { TileMap } from "./TileMap.js";
+import { Map } from "./Map.js";
 
 export class Game {
-    constructor(canvasId, tileSize, velocity) {
-        this.tileSize = tileSize;
+    constructor(canvasId, size, velocity) {
+        this.size = size;
         this.velocity = velocity;
         this.canvas = document.getElementById(canvasId);
         this.ctx = this.canvas.getContext("2d");
-        this.tileMap = new TileMap(tileSize);
-        this.pacman = this.tileMap.getPacman(velocity);
-        this.enemies = this.tileMap.getEnemies(velocity);
+        this.Map = new Map(size);
+        this.pacman = this.Map.getPacman(velocity);
+        this.enemies = this.Map.getEnemies(velocity);
         this.gameOver = false;
         this.gameWin = false;
         this.gameOverSound = new Audio("sounds/gameOver.wav");
         this.gameWinSound = new Audio("sounds/gameWin.wav");
-        this.tileMap.setCanvasSize(this.canvas);
+        this.Map.setCanvasSize(this.canvas);
         this.startGameLoop();
         
     }
@@ -23,7 +23,7 @@ export class Game {
     }
 
     gameLoop() {
-        this.tileMap.draw(this.ctx);
+        this.Map.draw(this.ctx);
         this.drawGameEnd();
         this.pacman.draw(this.ctx, this.isPaused(), this.enemies);
         this.enemies.forEach((enemy) => enemy.draw(this.ctx, this.isPaused(), this.pacman));
@@ -33,7 +33,7 @@ export class Game {
 
     checkGameWin() {
         if (!this.gameWin) {
-            this.gameWin = this.tileMap.didWin();
+            this.gameWin = this.Map.didWin();
             if (this.gameWin) {
                 this.gameWinSound.play();
             }

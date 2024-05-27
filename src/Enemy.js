@@ -1,36 +1,36 @@
-import MovingDirection from "./MovingDirection.js";
+import MovDirect from "./MovDirect.js";
 
 export class Enemy {
-    constructor(x, y, tileSize, velocity, tileMap) {
+    constructor(x, y, size, velocity, Map) {
         this.x = x;
         this.y = y;
-        this.tileSize = tileSize;
+        this.size = size;
         this.velocity = velocity;
-        this.tileMap = tileMap;
+        this.Map = Map;
 
         this.loadImages();
 
-        this.movingDirection = Math.floor(
-            Math.random() * Object.keys(MovingDirection).length
+        this.movDirect = Math.floor(
+            Math.random() * Object.keys(MovDirect).length
         );
 
-        this.directionTimerDefault = this.random(10, 25);
-        this.directionTimer = this.directionTimerDefault;
+        this.directTimerDef = this.random(10, 25);
+        this.directionTimer = this.directTimerDef;
 
-        this.scaredAboutToExpireTimerDefault = 10;
-        this.scaredAboutToExpireTimer = this.scaredAboutToExpireTimerDefault;
+        this.expireTimerDef = 10;
+        this.expireTimer = this.expireTimerDef;
     }
 
     draw(ctx, pause, pacman) {
         if (!pause) {
             this.move();
-            this.changeDirection();
+            this.changeDirect();
         }
         this.setImage(ctx, pacman);
     }
 
     collideWith(pacman) {
-        const size = this.tileSize / 2;
+        const size = this.size / 2;
         if (this.x < pacman.x + size && this.x + size > pacman.x
             && this.y < pacman.y + size &&
             this.y + size > pacman.y) {
@@ -42,18 +42,18 @@ export class Enemy {
 
     setImage(ctx, pacman) {
         if (pacman.powerDotActive) {
-            this.setImageWhenPowerDotIsActive(pacman);
+            this.powerDotIsActive(pacman);
         } else {
             this.image = this.normalGhost;
         }
-        ctx.drawImage(this.image, this.x, this.y, this.tileSize, this.tileSize);
+        ctx.drawImage(this.image, this.x, this.y, this.size, this.size);
     }
 
-    setImageWhenPowerDotIsActive(pacman) {
+    powerDotIsActive(pacman) {
         if (pacman.powerDotAboutToExpire) {
-            this.scaredAboutToExpireTimer--;
-            if (this.scaredAboutToExpireTimer === 0) {
-                this.scaredAboutToExpireTimer = this.scaredAboutToExpireTimerDefault;
+            this.expireTimer--;
+            if (this.expireTimer === 0) {
+                this.expireTimer = this.expireTimerDef;
                 if (this.image === this.scaredGhost) {
                     this.image = this.scaredGhost2;
                 } else {
@@ -65,38 +65,38 @@ export class Enemy {
         }
     }
 
-    changeDirection() {
+    changeDirect() {
         this.directionTimer--;
-        let newMoveDirection = null;
+        let newMoveDirect = null;
         if (this.directionTimer == 0) {
-            this.directionTimer = this.directionTimerDefault;
-            newMoveDirection = Math.floor(
-                Math.random() * Object.keys(MovingDirection).length
+            this.directionTimer = this.directTimerDef;
+            newMoveDirect = Math.floor(
+                Math.random() * Object.keys(MovDirect).length
             );
         }
 
-        if (newMoveDirection != null && this.movingDirection != newMoveDirection) {
-            if (Number.isInteger(this.x / this.tileSize) && Number.isInteger(this.y / this.tileSize)) {
-                if (!this.tileMap.didCollideWithEnvironment(this.x, this.y, newMoveDirection)) {
-                    this.movingDirection = newMoveDirection;
+        if (newMoveDirect != null && this.movDirect != newMoveDirect) {
+            if (Number.isInteger(this.x / this.size) && Number.isInteger(this.y / this.size)) {
+                if (!this.Map.didCollideWithEnvironment(this.x, this.y, newMoveDirect)) {
+                    this.movDirect = newMoveDirect;
                 }
             }
         }
     }
 
     move() {
-        if (!this.tileMap.didCollideWithEnvironment(this.x, this.y, this.movingDirection)) {
-            switch (this.movingDirection) {
-                case MovingDirection.up:
+        if (!this.Map.didCollideWithEnvironment(this.x, this.y, this.movDirect)) {
+            switch (this.movDirect) {
+                case MovDirect.up:
                     this.y -= this.velocity;
                     break;
-                case MovingDirection.down:
+                case MovDirect.down:
                     this.y += this.velocity;
                     break;
-                case MovingDirection.left:
+                case MovDirect.left:
                     this.x -= this.velocity;
                     break;
-                case MovingDirection.right:
+                case MovDirect.right:
                     this.x += this.velocity;
                     break;
             }

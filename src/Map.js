@@ -1,12 +1,8 @@
 import { Pacman } from "./Pacman.js";
 import { Enemy } from "./Enemy.js";
-import MovingDirection from "./MovingDirection.js";
+import MovingDirection from "./MovDirect.js";
 
-const right = document.querySelector("#right");
-        const left = document.querySelector("#left");
-        const up = document.querySelector("#up");
-        const down = document.querySelector("#down");
-export class TileMap {
+export class Map {
     constructor(tileSize) {
         this.tileSize = tileSize;
         this.yellowDot = new Image();
@@ -19,22 +15,26 @@ export class TileMap {
         this.wall.src = "images/wall.png";
 
         this.powerDot = this.pinkDot;
-        this.powerDotAnmationTimerDefault = 30;
-        this.powerDotAnmationTimer = this.powerDotAnmationTimerDefault;
+        this.dotAnimTimerDefault = 30;
+        this.dotAnimTimer = this.dotAnimTimerDefault;
     }
 
    
     map = [
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        [1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+        [1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 0, 0, 0, 0, 0, 0, 6, 1],
         [1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1],
         [1, 6, 1, 0, 0, 1, 0, 0, 6, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1],
-        [1, 0, 1, 0, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1],
+        [1, 0, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1],
         [1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 1],
-        [1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 6, 1],
+        [1, 0, 1, 6, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 6, 1],
         [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
         [1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1],
         [1, 7, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 1],
+        [1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1],
+        [1, 0, 0, 0, 0, 1, 0, 0, 0, 6, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1],
+        [1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 7, 1, 1, 1, 0, 1, 1, 1, 0, 1],
+        [1, 6, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 6, 0, 0, 0, 0, 1],
         [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     ];
 
@@ -66,9 +66,9 @@ export class TileMap {
     }
 
     drawPowerDot(ctx, column, row, size) {
-        this.powerDotAnmationTimer--;
-        if (this.powerDotAnmationTimer === 0) {
-            this.powerDotAnmationTimer = this.powerDotAnmationTimerDefault;
+        this.dotAnimTimer--;
+        if (this.dotAnimTimer === 0) {
+            this.dotAnimTimer = this.dotAnimTimerDefault;
             if (this.powerDot == this.pinkDot) {
                 this.powerDot = this.yellowDot;
             } else {
