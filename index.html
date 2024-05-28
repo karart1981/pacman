@@ -11,12 +11,14 @@
 </head>
 
 <body>
-    <div>
-        <button id="menu">New Game</button>
-        <button id="exit">Exit Game</button>
+    <div class="game" id="startGame">
+        <h1 class="start_item">Pacman</h1>
+        <div class="btns">
+            <button class="start_item" id="start">New Game</button>
+            <button class="start_item" id="exit">Exit Game</button>
+        </div>
     </div>
-    <div>
-        <h1>Pacman</h1>
+    <div class="game packmanGame">
         <canvas id="gameCanvas"></canvas>
     </div>
     <script src="./script.js" type="module"></script>
